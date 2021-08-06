@@ -26,10 +26,10 @@
     "stream"
   ],
   "dependencies": {
-    "async": "^3.1.0",
     "@dabh/diagnostics": "^2.0.2",
+    "async": "^3.1.0",
     "is-stream": "^2.0.0",
-    "logform": "^2.2.0",
+    "logform": "git+https://github.com/winstonjs/logform.git#b91bfa5c32a6077adcf2526ee8d3414c7171e557",
     "one-time": "^1.0.0",
     "readable-stream": "^3.4.0",
     "stack-trace": "0.0.x",
