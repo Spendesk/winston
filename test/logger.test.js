@@ -111,12 +111,12 @@ describe('Logger', function () {
 
   it('.add(TransportStream)', function (done) {
     var logger = winston.createLogger();
-    var expected = { message: 'foo', level: 'info' };
+    var expected = { level: 'info', message: 'foo' };
     var transport = new TransportStream({
       log: function (info) {
         assume(info.message).equals('foo');
         assume(info.level).equals('info');
-        assume(info[MESSAGE]).equals(JSON.stringify({ message: 'foo', level: 'info' }));
+        assume(info[MESSAGE]).equals(JSON.stringify({ level: 'info', message: 'foo' }));
         done();
       }
     });
@@ -282,7 +282,7 @@ describe('Logger (levels)', function () {
   it('report unknown levels', function (done) {
     stdMocks.use();
     var logger = helpers.createLogger(function (info) {});
-    var expected = { message: 'foo', level: 'bar' };
+    var expected = { level: 'bar', message: 'foo' };
     logger.log(expected);
 
     stdMocks.restore();
@@ -313,7 +313,7 @@ describe('Logger (levels)', function () {
 
   it('default levels', function (done) {
     var logger = winston.createLogger();
-    var expected = { message: 'foo', level: 'debug' };
+    var expected = { level: 'debug', message: 'foo' };
 
     function logLevelTransport(level) {
       return new TransportStream({
@@ -325,7 +325,7 @@ describe('Logger (levels)', function () {
 
           assume(obj.message).equals('foo');
           assume(obj.level).equals('debug');
-          assume(obj[MESSAGE]).equals(JSON.stringify({ message: 'foo', level: 'debug' }));
+          assume(obj[MESSAGE]).equals(JSON.stringify({ level: 'debug', message: 'foo' }));
           done();
         }
       });
@@ -349,7 +349,7 @@ describe('Logger (levels)', function () {
       }
     });
 
-    var expected = { message: 'foo', level: 'test' };
+    var expected = { level: 'test', message: 'foo'};
     function filterLevelTransport(level) {
       return new TransportStream({
         level: level,
@@ -360,7 +360,7 @@ describe('Logger (levels)', function () {
 
           assume(obj.message).equals('foo');
           assume(obj.level).equals('test');
-          assume(obj[MESSAGE]).equals(JSON.stringify({ message: 'foo', level: 'test' }));
+          assume(obj[MESSAGE]).equals(JSON.stringify({ level: 'test', message: 'foo' }));
           done();
         }
       });
@@ -386,7 +386,7 @@ describe('Logger (levels)', function () {
 
         assume(obj.message).equals('foo');
         assume(obj.level).equals('error');
-        assume(obj[MESSAGE]).equals(JSON.stringify({ message: 'foo', level: 'error' }));
+        assume(obj[MESSAGE]).equals(JSON.stringify({ level: 'error', message: 'foo' }));
         done();
       }
     });
@@ -394,8 +394,8 @@ describe('Logger (levels)', function () {
     // Begin our test in the next tick after the pipe event is
     // emitted from the transport.
     transport.once('pipe', () => setImmediate(() => {
-      const expectedError = { message: 'foo', level: 'error' };
-      const expectedInfo = { message: 'bar', level: 'info' };
+      const expectedError = { level: 'error', message: 'foo' };
+      const expectedInfo = { level: 'info', message: 'bar' };
 
       assume(logger.error).is.a('function');
       assume(logger.info).is.a('function');
